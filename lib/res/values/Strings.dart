@@ -3,7 +3,7 @@ class Strings {
   static final String EMAIL = 'Email';
   static final String PASSOWORD = 'Contraseña';
   static final String LOGIN = 'Iniciar Sesión';
-  static final String REGISTRARSE = 'Registrarse';
+  static final String SIGNUP = 'Registrarse';
   static final String NAME = 'Nombre';
   static final String LASTNAME = 'Apellidos';
   static final String PHONE = 'Teléfono';
