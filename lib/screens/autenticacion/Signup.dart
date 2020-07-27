@@ -2,8 +2,12 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/material.dart';
 import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/Strings.dart';
+import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
+import 'package:practilab/utilities/helpers/StringHelper.dart';
+import 'package:practilab/utilities/interfaces/Message.dart';
+import 'package:practilab/utilities/models/User.dart';
 
 class Signup extends StatefulWidget {
   final String title;
@@ -13,11 +17,18 @@ class Signup extends StatefulWidget {
   @override
   _SignupState createState() => new _SignupState();
  }
-class _SignupState extends State<Signup> {
+class _SignupState extends State<Signup> implements Message
+{
+  final AuthService _authService = AuthService();
   final _keyform = GlobalKey<FormState>();
+  final _keytextemail = GlobalKey<FormFieldState>();
+  final _keytextpass = GlobalKey<FormFieldState>();
+  final StringHelper _stringHelper = StringHelper();
+  String email="",password="";
   @override
   void initState() {
     super.initState();
+    _authService.setMessageListener(this);
     BackButtonInterceptor.add(myInterceptor);
   }
   @override
@@ -80,15 +91,17 @@ class _SignupState extends State<Signup> {
                                        child:Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                    ),
                                    TextFormField(
+                                     key: _keytextemail,
                                      keyboardType: TextInputType.emailAddress,
                                      decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                     /*decoration: InputDecoration(
-                                                        hintText: Strings.EMAIL,
-                                                        helperStyle: Decorations().styleTextView(color: ColorsApp.black,textSize: 10.0,fontWeight: FontWeight.w500)
-                                                    ),*/
-                                     validator: (String val)
+                                     validator: (String emails)
                                      {
-                                       return val.isEmpty?"Error":null;
+                                       return !_stringHelper.isEmail(email)?"No es un email válido. ejem@serv.com!":null;
+                                     },
+                                     onChanged: (String val)
+                                     {
+                                       email=val;
+                                       _keytextemail.currentState.validate();
                                      },
                                    ),
                                  ],
@@ -106,11 +119,19 @@ class _SignupState extends State<Signup> {
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
+                                       key: _keytextpass,
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
+                                         val=password;
+                                         //print(val);
+                                         return val.isEmpty?"Error, campo vacío":null;
+                                       },
+                                       onChanged: (String pass)
+                                       {
+                                         password=pass;
+                                         _keytextpass.currentState.validate();
                                        },
                                      ),
                                    ]
@@ -130,10 +151,10 @@ class _SignupState extends State<Signup> {
                                      TextFormField(
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       validator: (String val)
+                                       /*validator: (String val)
                                        {
                                          return val.isEmpty?"Error":null;
-                                       },
+                                       },*/
                                      ),
                                    ]
                                )
@@ -152,10 +173,10 @@ class _SignupState extends State<Signup> {
                                      TextFormField(
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.NAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       validator: (String val)
+                                       /*validator: (String val)
                                        {
                                          return val.isEmpty?"Error":null;
-                                       },
+                                       },*/
                                      ),
                                    ]
                                )
@@ -174,10 +195,10 @@ class _SignupState extends State<Signup> {
                                      TextFormField(
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.LASTNAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       validator: (String val)
+                                       /*validator: (String val)
                                        {
                                          return val.isEmpty?"Error":null;
-                                       },
+                                       },*/
                                      ),
                                    ]
                                )
@@ -196,10 +217,10 @@ class _SignupState extends State<Signup> {
                                      TextFormField(
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.CTRL_NUMBER,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       validator: (String val)
+                                       /*validator: (String val)
                                        {
                                          return val.isEmpty?"Error":null;
-                                       },
+                                       },*/
                                      ),
                                    ]
                                )
@@ -218,10 +239,10 @@ class _SignupState extends State<Signup> {
                                      TextFormField(
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.PHONE,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       validator: (String val)
+                                       /*validator: (String val)
                                        {
                                          return val.isEmpty?"Error":null;
-                                       },
+                                       },*/
                                      ),
                                    ]
                                )
@@ -236,9 +257,18 @@ class _SignupState extends State<Signup> {
                                child: RaisedButton(
                                  child: TextViewBuilder(Strings.SIGNUP,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400),
                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                                 onPressed:()=>
+                                 onPressed:() async
                                  {
                                   // _changeScreen()
+                                   if(_keyform.currentState.validate())
+                                   {
+                                     dynamic result = await _authService.registerUserEmailAndPassword(email, password);
+                                     if(result!=null)
+                                       {
+                                         SnackBar s = SnackBar(content: TextViewBuilder("Success ${result.uid}",colorfont: ColorsApp.white,textSize: 12),);
+                                         Scaffold.of(_keyform.currentContext).showSnackBar(s);
+                                       }
+                                   }
                                  } ,
                                  elevation: 10.0,
                                  color: ColorsApp.blue,
@@ -265,6 +295,13 @@ class _SignupState extends State<Signup> {
   bool myInterceptor(bool stopDefaultButtonEvent) {
     this.widget.toggleScreen();
     return true;
+  }
+
+  @override
+  void onMessage(String message) {
+    // TODO: implement onMessage
+    SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
+    Scaffold.of(_keyform.currentContext).showSnackBar(s);
   }
 
 }

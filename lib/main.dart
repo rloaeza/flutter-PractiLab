@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:practilab/Wrapper.dart';
 import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/DrawableValues.dart';
+import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/helpers/ImageHelper.dart';
+import 'package:practilab/utilities/models/User.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +27,10 @@ class MyApp extends StatelessWidget {
               image: ImageHelper.getAsset(DrawableValues.BACKGROUND_IMAGE)
               )
           ),
-          child:Wrapper()
+          child:StreamProvider<User>.value(
+              value: AuthService().user,
+              child: Wrapper()
+          )
       )
     );
 

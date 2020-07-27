@@ -1,16 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
-import 'package:practilab/utilities/componentes/ProgressIndicatorBuilder.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
-import 'package:practilab/utilities/helpers/ImageHelper.dart';
-import 'package:practilab/utilities/helpers/MessageInterface.dart';
 import 'package:practilab/utilities/helpers/StringHelper.dart';
-import 'package:practilab/utilities/helpers/intermediarios/IntermediarioMenssage.dart';
 import 'package:practilab/res/values/Colors.dart';
-import 'package:practilab/res/values/DrawableValues.dart';
 import 'package:practilab/res/values/Strings.dart';
+import 'package:practilab/utilities/interfaces/Message.dart';
 
 class Login extends StatefulWidget
 {
@@ -30,26 +27,24 @@ class Login extends StatefulWidget
 
 class _StateLogin  extends State<Login> implements Message
 {
-  bool _loading = false;
+
   final _keytextemail = GlobalKey<FormFieldState>();
   final _keytextpass = GlobalKey<FormFieldState>();
   final _keyform = GlobalKey<FormState>();
-  IntermediarioMessage intermediarioMessage;
+  final StringHelper _stringHelper = StringHelper();
+  final AuthService _authService = AuthService();
   String email="";
   String password="";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    intermediarioMessage= IntermediarioMessage();
-    intermediarioMessage.setMessageListener(this);
+    _authService.setMessageListener(this);
   }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return
-              Scaffold(
+    return Scaffold(
                 backgroundColor: Colors.transparent,
                 body:  SingleChildScrollView(
                     child:  Container(
@@ -98,13 +93,9 @@ class _StateLogin  extends State<Login> implements Message
                                                     key: _keytextemail,
                                                     keyboardType: TextInputType.emailAddress,
                                                     decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                                    /*decoration: InputDecoration(
-                                                          hintText: Strings.EMAIL,
-                                                          helperStyle: Decorations().styleTextView(color: ColorsApp.black,textSize: 10.0,fontWeight: FontWeight.w500)
-                                                      ),*/
                                                     validator: (String emails)
                                                     {
-                                                      return !StringHelper().isEmail(email)?"No es un email válido. ejem@serv.com!":null;
+                                                      return !_stringHelper.isEmail(email)?"No es un email válido. ejem@serv.com!":null;
                                                     },
                                                     onChanged: (String val)
                                                     {
@@ -132,7 +123,6 @@ class _StateLogin  extends State<Login> implements Message
                                                       decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                                       validator: (String val)
                                                       {
-
                                                         val=password;
                                                         //print(val);
                                                         return val.isEmpty?"Error, campo vacío":null;
@@ -171,6 +161,7 @@ class _StateLogin  extends State<Login> implements Message
                                            if( _keyform.currentState.validate())
                                              {
                                                print("ok ${email} & $password");
+                                               _authService.signInUserEmailAndPassword(email, password);
                                              }
                                            else{
                                              print("error ses");
@@ -224,7 +215,7 @@ class _StateLogin  extends State<Login> implements Message
       _loading = false;
 
     });
-  }*/
+  }
   @override
   void status(String message)
   {
@@ -238,10 +229,17 @@ class _StateLogin  extends State<Login> implements Message
       new Future.delayed(new Duration(seconds: 3), );
       _loading=false;
     });
-  }
+  }*/
 
   _changeScreen() {
     this.widget.toggleScreen();
+  }
+
+  @override
+  void onMessage(String message) {
+    // TODO: implement onMessage
+    SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
+    Scaffold.of(_keyform.currentContext).showSnackBar(s);
   }
 
 }

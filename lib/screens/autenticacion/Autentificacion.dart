@@ -8,7 +8,7 @@ class Autentificacion extends StatefulWidget {
  }
 class _AutentificacionState extends State<Autentificacion> {
 
-  bool _showLogin=false;
+  bool _showLogin=true;
   Function toggleScreen()
   {
     setState(() {

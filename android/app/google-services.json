@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "245389225644",
+    "firebase_url": "https://practilab-itsu.firebaseio.com",
+    "project_id": "practilab-itsu",
+    "storage_bucket": "practilab-itsu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:245389225644:android:957e355d9f564465c33909",
+        "android_client_info": {
+          "package_name": "com.example.practilab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "245389225644-2se3b6ph6lm6uslmms41373l6um1bnpu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXG4MMs_YTynNE5Td32sjSJWxo0rNUlyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "245389225644-2se3b6ph6lm6uslmms41373l6um1bnpu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
