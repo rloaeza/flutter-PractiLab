@@ -28,10 +28,20 @@ class AuthService
     }
     on PlatformException catch (exception) {
       switch (exception.code) {
+        case 'ERROR_INVALID_EMAIL':
+          message.onMessage("El email es inválido");
+          break;
+        case 'ERROR_WRONG_PASSWORD':
+          message.onMessage("El contraseña es inválida");
+          break;
         case 'ERROR_USER_NOT_FOUND':
-          message.onMessage("El email no está registrado");
+          message.onMessage("El usuario no fue encontrado");
+          break;
+        case 'ERROR_USER_DISABLED':
+          message.onMessage("El usuario fue desabilidado, contacte al administrador");
           break;
         default:
+          message.onMessage("Error de conexión");
           break;
       }
     }

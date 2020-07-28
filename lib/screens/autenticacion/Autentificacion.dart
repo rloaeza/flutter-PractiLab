@@ -19,7 +19,9 @@ class _AutentificacionState extends State<Autentificacion> {
   @override
   Widget build(BuildContext context)
   {
-   return   _showLogin?Login(title:"Login",toggleScreen:toggleScreen):Signup(title:"Registrarse",toggleScreen: toggleScreen);
+   return  Scaffold(
+     backgroundColor: Colors.transparent,
+     body:  _showLogin?Login(title:"Login",toggleScreen:toggleScreen):Signup(title:"Registrarse",toggleScreen: toggleScreen),);
   }
 
 

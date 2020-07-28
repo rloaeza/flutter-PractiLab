@@ -3,9 +3,10 @@ import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/models/Materia.dart';
 
-Widget ListViewBuilder(BuildContext context, List<Materia> materiaItems)
+Widget listViewBuilder({BuildContext context, List<Materia> materiaItems, Function onTap})
 {
   return ListView.builder(
+
       itemCount: materiaItems.length,
       itemBuilder: (context,index)
       {
@@ -14,20 +15,22 @@ Widget ListViewBuilder(BuildContext context, List<Materia> materiaItems)
             ListTile(
               trailing: IconButton(
                 icon:Icon(Icons.message,
-                  color: ColorsApp.blue, ),
+                  color: ColorsApp.blue,
+                size: 35,),
                 onPressed: ()
                 {
                   SnackBar s = SnackBar(content: TextViewBuilder("mensaje",colorfont: ColorsApp.white,textSize: 12),);
                   Scaffold.of(context).showSnackBar(s);
                 }),
-              title: TextViewBuilder(materiaItems[index].nombre,colorfont: ColorsApp.blue,textSize: 25.0),
+              title: TextViewBuilder(materiaItems[index].nombre,colorfont: ColorsApp.blue,textSize: 20.0),
               subtitle: TextViewBuilderElipsis(praticas(materiaItems[index].cantidadPracticas),colorfont: ColorsApp.blue,textSize: 12.0),
-
+              onTap: onTap,
             ),
             Divider(color: ColorsApp.blue,)
-          ],
+          ]
         );
       }
+
   );
 }
 
@@ -36,7 +39,15 @@ String praticas(int cantidad)
   String practicas="";
   for(int practica=0;practica<cantidad;practica++)
   {
+    if(practica==cantidad-1)
+    {
+        practicas+="Práctica ${practica+1}. ";
+    }
+    else
+    {
       practicas+="Práctica ${practica+1}, ";
+    }
+
   }
   return practicas;
 }

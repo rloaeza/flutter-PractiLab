@@ -3,16 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
+import 'package:practilab/utilities/componentes/ProgressIndicatorBuilder.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/helpers/StringHelper.dart';
 import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/Strings.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
+import 'package:toast/toast.dart';
 
 class Login extends StatefulWidget
 {
   final String title;
   final Function toggleScreen;
+
 
 
   Login({@required this.title,this.toggleScreen});
@@ -27,7 +30,7 @@ class Login extends StatefulWidget
 
 class _StateLogin  extends State<Login> implements Message
 {
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _keytextemail = GlobalKey<FormFieldState>();
   final _keytextpass = GlobalKey<FormFieldState>();
   final _keyform = GlobalKey<FormState>();
@@ -35,16 +38,28 @@ class _StateLogin  extends State<Login> implements Message
   final AuthService _authService = AuthService();
   String email="";
   String password="";
+  String messages="";
+  bool loading = false;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _authService.setMessageListener(this);
+
+  }
+  @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    setSnackBar(messages);
+
   }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return loading?ProgressIndicatorBuilder():Scaffold(
+                key: _scaffoldKey,
                 backgroundColor: Colors.transparent,
                 body:  SingleChildScrollView(
                     child:  Container(
@@ -155,16 +170,24 @@ class _StateLogin  extends State<Login> implements Message
                                         height: 40,
                                         child: RaisedButton(
                                           child: Center(child: TextViewBuilder(Strings.LOGIN,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400)),
-                                         onPressed: ()
+                                         onPressed: () async
                                           {
                                             //_onLoading();
                                            if( _keyform.currentState.validate())
                                              {
                                                print("ok ${email} & $password");
-                                               _authService.signInUserEmailAndPassword(email, password);
+                                               setState(() {
+                                                 loading=true;
+                                               });
+                                               dynamic result = _authService.signInUserEmailAndPassword(email, password);
+                                               if(result == null)
+                                               {
+                                                 print("sot nullo");
+
+                                               }
                                              }
                                            else{
-                                             print("error ses");
+                                             Toast.show("Error en las credenciales, campos inválidos",context);
                                            }
                                           },
                                           color: ColorsApp.blue,
@@ -195,41 +218,12 @@ class _StateLogin  extends State<Login> implements Message
                     )
                 ),
               );
-             // _loading?ProgressIndicatorBuilder():Padding(padding: EdgeInsets.only(bottom: 5.0),)
+
 
 
 
 
   }
-
-  /*void _onLoading() {
-    setState(() {
-      //intermediarioMessage.getValidateCredentials(_textEditingControlleremail.text, _textEditingControllerpassword.text);
-      _loading=true;
-      new Future.delayed(new Duration(seconds: 3), _login);
-
-    });
-  }
-  Future _login() async{
-    setState((){
-      _loading = false;
-
-    });
-  }
-  @override
-  void status(String message)
-  {
-    // TODO: implement status
-    setState(()
-    {
-      print(_loading);
-      Scaffold.of(context).showSnackBar(new SnackBar(
-          content: Text(message)
-      ));
-      new Future.delayed(new Duration(seconds: 3), );
-      _loading=false;
-    });
-  }*/
 
   _changeScreen() {
     this.widget.toggleScreen();
@@ -238,8 +232,25 @@ class _StateLogin  extends State<Login> implements Message
   @override
   void onMessage(String message) {
     // TODO: implement onMessage
-    SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
-    Scaffold.of(_keyform.currentContext).showSnackBar(s);
+    setState(() {
+      print(" resultado");
+      loading=false;
+      messages=message;
+    });
+
+
+  }
+
+  void setSnackBar(String message)
+  {
+    if(message!="")
+    {
+      Toast.show(message,context,duration: 2);
+      setState(() {
+        messages="";
+      });
+    }
+
   }
 
 }

@@ -8,6 +8,7 @@ import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/helpers/StringHelper.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
 import 'package:practilab/utilities/models/User.dart';
+import 'package:toast/toast.dart';
 
 class Signup extends StatefulWidget {
   final String title;
@@ -300,8 +301,10 @@ class _SignupState extends State<Signup> implements Message
   @override
   void onMessage(String message) {
     // TODO: implement onMessage
-    SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
-    Scaffold.of(_keyform.currentContext).showSnackBar(s);
+    //Toast.show(message, context,);
+    //SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
+    //Scaffold.of(_keyform.currentContext).showSnackBar(s);
+    print(message);
   }
 
 }
