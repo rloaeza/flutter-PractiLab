@@ -272,9 +272,9 @@ class _SignupState extends State<Signup> implements Message
                                      loading=true;
                                       });
                                      dynamic result = await _authService.registerUserEmailAndPassword(email, password);
-                                     if(result!=null)
+                                     if(result==null)
                                        {
-                                         SnackBar s = SnackBar(content: TextViewBuilder("Success ${result.uid}",colorfont: ColorsApp.white,textSize: 12),);
+                                         SnackBar s = SnackBar(content: TextViewBuilder("Error de registro",colorfont: ColorsApp.white,textSize: 12),);
                                          Scaffold.of(_keyform.currentContext).showSnackBar(s);
                                        }
                                    }

@@ -17,23 +17,17 @@ class Principal extends StatefulWidget {
  }
 class _PrincipalState extends State<Principal> implements Message {
 
-
-
-
  final  AuthService _authService =  AuthService();
- final _keyscaffold = GlobalKey<ScaffoldState>();
  String messages="";
- bool loading=false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _authService.setMessageListener(this);
-
   }
   @override
   Widget build(BuildContext context) {
-   return  loading?ProgressIndicatorBuilder(title: Strings.SALIENDO):Scaffold(
+   return  Scaffold(
 
      backgroundColor: Colors.transparent,
      body: Column(
@@ -43,7 +37,7 @@ class _PrincipalState extends State<Principal> implements Message {
          Expanded(
            flex: 1,
            child: Container(
-             key: _keyscaffold,
+
              width: MediaQuery.of(context).size.width,
              child: Row(
                children: <Widget>[
@@ -54,9 +48,6 @@ class _PrincipalState extends State<Principal> implements Message {
                    icon: Icon(Icons.exit_to_app,color: ColorsApp.blue,size: 30.0,),
                    onPressed: () async
                    {
-                     setState(() {
-                       loading=true;
-                     });
                       _authService.singOut();
                    },
                  ),
@@ -151,7 +142,6 @@ class _PrincipalState extends State<Principal> implements Message {
     // TODO: implement onMessage
     setState(() {
       print(" resultado");
-      loading=false;
       messages=message;
     });
   }void setSnackBar(String message)
@@ -169,6 +159,5 @@ class _PrincipalState extends State<Principal> implements Message {
    // TODO: implement setState
    super.setState(fn);
    setSnackBar(messages);
-
  }
 }

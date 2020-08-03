@@ -70,7 +70,7 @@ class AuthService
   Future singOut() async
   {
     try {
-      message.onMessage("Saliendo...");
+      message.onMessage("Nos vemos pronto!!");
       return await _auth.signOut();
     }
     catch(e)
