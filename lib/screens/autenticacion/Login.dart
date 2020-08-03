@@ -58,7 +58,7 @@ class _StateLogin  extends State<Login> implements Message
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return loading?ProgressIndicatorBuilder():Scaffold(
+    return loading?ProgressIndicatorBuilder(title: Strings.INGRESANDO):Scaffold(
                 key: _scaffoldKey,
                 backgroundColor: Colors.transparent,
                 body:  SingleChildScrollView(

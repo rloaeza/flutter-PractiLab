@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:practilab/res/values/Colors.dart';
-import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
+import 'package:practilab/utilities/componentes/tiles/MateriaTile.dart';
 import 'package:practilab/utilities/models/Materia.dart';
 
-Widget listViewBuilder({BuildContext context, List<Materia> materiaItems, Function onTap})
+class ListViewBuilderMaterias extends StatefulWidget {
+  @override
+  _ListViewBuilderMateriasState createState() => new _ListViewBuilderMateriasState();
+ }
+class _ListViewBuilderMateriasState extends State<ListViewBuilderMaterias> {
+  List<Materia> materiaItems = [
+    Materia(nombre: "Química", cantidadPracticas: 5),
+    Materia(nombre: "Redes de computadoras", cantidadPracticas: 5),
+    Materia(nombre: "Fundamentos de BBDD", cantidadPracticas: 2),
+    Materia(nombre: "Física", cantidadPracticas: 6),
+    Materia(nombre: "Electrónica 2", cantidadPracticas: 5),
+    Materia(nombre: "Cemento 1", cantidadPracticas: 1),
+    Materia(nombre: "Taller de Administración", cantidadPracticas: 9),
+    Materia(nombre: "Química orgánica", cantidadPracticas: 7)];
+
+  //final materias = [];//Provider.of<<List<Materias>>(context)??[];
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: materiaItems.length, // materias.length,
+      itemBuilder: (context, index) {
+        return MateriaTile(materia: materiaItems[index],);
+      },
+    );
+  }
+}
+
+
+
+
+/*Widget listViewBuilder({BuildContext context, List<Materia> materiaItems, Function onTap})
 {
   return ListView.builder(
 
@@ -50,4 +79,4 @@ String praticas(int cantidad)
 
   }
   return practicas;
-}
+}*/

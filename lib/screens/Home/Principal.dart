@@ -4,10 +4,12 @@ import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/Strings.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
-import 'package:practilab/utilities/componentes/ListViewBuilder.dart';
+import 'package:practilab/utilities/componentes/ProgressIndicatorBuilder.dart';
+import 'file:///C:/Users/vicen/StudioProjects/Flutter/flutter-PractiLab/lib/utilities/componentes/lists/ListViewBuilderMaterias.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
 import 'package:practilab/utilities/models/Materia.dart';
+import 'package:toast/toast.dart';
 
 class Principal extends StatefulWidget {
   @override
@@ -15,28 +17,23 @@ class Principal extends StatefulWidget {
  }
 class _PrincipalState extends State<Principal> implements Message {
 
-  List<Materia> materiaItems= [
-    Materia(nombre: "Química",cantidadPracticas: 5),
-    Materia(nombre: "Redes de computadoras",cantidadPracticas: 5),
-    Materia(nombre: "Fundamentos de BBDD",cantidadPracticas: 2),
-    Materia(nombre: "Física",cantidadPracticas: 6),
-    Materia(nombre: "Electrónica 2",cantidadPracticas: 5),
-    Materia(nombre: "Cemento 1",cantidadPracticas: 1),
-    Materia(nombre: "Taller de Administración",cantidadPracticas: 9),
-    Materia(nombre: "Química orgánica",cantidadPracticas: 7)];
+
 
 
  final  AuthService _authService =  AuthService();
  final _keyscaffold = GlobalKey<ScaffoldState>();
+ String messages="";
+ bool loading=false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _authService.setMessageListener(this);
+
   }
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+   return  loading?ProgressIndicatorBuilder(title: Strings.SALIENDO):Scaffold(
 
      backgroundColor: Colors.transparent,
      body: Column(
@@ -46,6 +43,7 @@ class _PrincipalState extends State<Principal> implements Message {
          Expanded(
            flex: 1,
            child: Container(
+             key: _keyscaffold,
              width: MediaQuery.of(context).size.width,
              child: Row(
                children: <Widget>[
@@ -56,6 +54,9 @@ class _PrincipalState extends State<Principal> implements Message {
                    icon: Icon(Icons.exit_to_app,color: ColorsApp.blue,size: 30.0,),
                    onPressed: () async
                    {
+                     setState(() {
+                       loading=true;
+                     });
                       _authService.singOut();
                    },
                  ),
@@ -73,16 +74,8 @@ class _PrincipalState extends State<Principal> implements Message {
                  borderRadius: BorderRadius.circular(15.0),
                ),
                child: Container(
-                   key:  _keyscaffold,
                    padding: EdgeInsets.all(5),
-                   child: listViewBuilder(
-                     context: context,
-                     materiaItems: materiaItems,
-                     onTap: (){
-                       SnackBar s = SnackBar(content: TextViewBuilder("Hola",colorfont: ColorsApp.white,textSize: 12),);
-                       Scaffold.of(_keyscaffold.currentContext).showSnackBar(s);
-                     }
-                   ),
+                   child: ListViewBuilderMaterias(),
                ),
              ),
            ),
@@ -156,8 +149,26 @@ class _PrincipalState extends State<Principal> implements Message {
   void onMessage(String message)
   {
     // TODO: implement onMessage
-    SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
-    Scaffold.of(_keyscaffold.currentContext).showSnackBar(s);
-    print(message);
-  }
+    setState(() {
+      print(" resultado");
+      loading=false;
+      messages=message;
+    });
+  }void setSnackBar(String message)
+ {
+   if(message!="")
+   {
+     Toast.show(message,context,duration: 2);
+     setState(() {
+       messages="";
+     });
+   }
+ }
+ @override
+ void setState(fn) {
+   // TODO: implement setState
+   super.setState(fn);
+   setSnackBar(messages);
+
+ }
 }

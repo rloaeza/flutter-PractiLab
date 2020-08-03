@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:practilab/res/values/Colors.dart';
 
-class ProgressIndicatorBuilder extends StatelessWidget {
+class ProgressIndicatorBuilder extends StatelessWidget
+{
+  String title;
+  ProgressIndicatorBuilder({this.title});
  @override
  Widget build(BuildContext context) {
   return  Stack(
@@ -39,7 +42,7 @@ class ProgressIndicatorBuilder extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 25.0),
                   child: new Center(
                     child: new Text(
-                      "Loading.. wait...",
+                      title,
                       style: new TextStyle(
                           color: Colors.white
                       ),

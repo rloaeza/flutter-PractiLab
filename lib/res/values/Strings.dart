@@ -19,4 +19,7 @@ class Strings {
   static final String CUESTIONARIO1 = 'Cuestionario 1';
   static final String PROCEDIMIENTO = 'Procedimiento';
   static final String PREGUNTAS = 'Preguntas';
+  static final String INGRESANDO ="Ingresando al sistema";
+  static final String SALIENDO ="Saliendo al sistema";
+
 }

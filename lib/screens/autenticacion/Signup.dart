@@ -4,11 +4,12 @@ import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/Strings.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
+import 'package:practilab/utilities/componentes/ProgressIndicatorBuilder.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/helpers/StringHelper.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
-import 'package:practilab/utilities/models/User.dart';
 import 'package:toast/toast.dart';
+
 
 class Signup extends StatefulWidget {
   final String title;
@@ -18,14 +19,17 @@ class Signup extends StatefulWidget {
   @override
   _SignupState createState() => new _SignupState();
  }
+
 class _SignupState extends State<Signup> implements Message
 {
   final AuthService _authService = AuthService();
+  final _keyscaffold = GlobalKey<ScaffoldState>();
   final _keyform = GlobalKey<FormState>();
   final _keytextemail = GlobalKey<FormFieldState>();
   final _keytextpass = GlobalKey<FormFieldState>();
   final StringHelper _stringHelper = StringHelper();
-  String email="",password="";
+  String email="",password="", messages="";
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -34,7 +38,8 @@ class _SignupState extends State<Signup> implements Message
   }
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+   return loading?ProgressIndicatorBuilder(title: Strings.INGRESANDO):Scaffold(
+     key: _keyscaffold,
      backgroundColor: Colors.transparent,
      body: SingleChildScrollView(
            child: Container(
@@ -263,6 +268,9 @@ class _SignupState extends State<Signup> implements Message
                                   // _changeScreen()
                                    if(_keyform.currentState.validate())
                                    {
+                                     setState(() {
+                                     loading=true;
+                                      });
                                      dynamic result = await _authService.registerUserEmailAndPassword(email, password);
                                      if(result!=null)
                                        {
@@ -293,7 +301,7 @@ class _SignupState extends State<Signup> implements Message
     super.dispose();
     BackButtonInterceptor.remove(myInterceptor);
   }
-  bool myInterceptor(bool stopDefaultButtonEvent) {
+  bool myInterceptor(bool stopDefaultButtonEvent,RouteInfo info) {
     this.widget.toggleScreen();
     return true;
   }
@@ -302,9 +310,28 @@ class _SignupState extends State<Signup> implements Message
   void onMessage(String message) {
     // TODO: implement onMessage
     //Toast.show(message, context,);
-    //SnackBar s = SnackBar(content: TextViewBuilder(message,colorfont: ColorsApp.white,textSize: 12),);
-    //Scaffold.of(_keyform.currentContext).showSnackBar(s);
-    print(message);
-  }
+    setState(() {
+      print(" resultado");
+      loading=false;
+      messages=message;
+    });
 
+  }
+  void setSnackBar(String message)
+  {
+    if(message!="")
+    {
+      Toast.show(message,context,duration: 2);
+      setState(() {
+        messages="";
+      });
+    }
+  }
+  @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    setSnackBar(messages);
+
+  }
 }
