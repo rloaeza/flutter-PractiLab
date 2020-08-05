@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:practilab/res/values/Colors.dart';
+import 'package:practilab/utilities/interfaces/NotificarEliminacion.dart';
 import 'package:practilab/utilities/models/Materia.dart';
+import 'package:practilab/utilities/models/User.dart';
+import 'package:provider/provider.dart';
 
 import '../TextViewBuilder.dart';
 
 class MateriaTile extends StatefulWidget
 {
+  NotificarEliminacionMateria notificarEliminacionMateria;
   final Materia materia;
   MateriaTile({this.materia});
   @override
   _MateriaTileState createState() => new _MateriaTileState();
+
+  void setNotificarEliminacionLitener(NotificarEliminacionMateria notificarEliminacionMateria)
+  {
+    this.notificarEliminacionMateria=notificarEliminacionMateria;
+  }
  }
 class _MateriaTileState extends State<MateriaTile>
 {
-
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
+
     return Column(
         children: <Widget>[
           ListTile(
@@ -33,14 +42,21 @@ class _MateriaTileState extends State<MateriaTile>
             subtitle: TextViewBuilderElipsis(praticas(this.widget.materia.cantidadPracticas),colorfont: ColorsApp.blue,textSize: 12.0),
             onTap: ()
             {
+
               SnackBar s = SnackBar(content: TextViewBuilder("Hola",colorfont: ColorsApp.white,textSize: 12),);
               Scaffold.of(context).showSnackBar(s);
+            },
+            onLongPress: (){
+              SnackBar s = SnackBar(content: TextViewBuilder(this.widget.materia.uid+"",colorfont: ColorsApp.white,textSize: 12),);
+              Scaffold.of(context).showSnackBar(s);
+              this.widget.notificarEliminacionMateria.setMateriaId(this.widget.materia.uid);
             },
           ),
           Divider(color: ColorsApp.blue,)
         ]
     );
   }
+
   String praticas(int cantidad)
   {
     String practicas="";
@@ -55,6 +71,10 @@ class _MateriaTileState extends State<MateriaTile>
         practicas+="Práctica ${practica+1}, ";
       }
 
+    }
+    if(practicas=="")
+    {
+     practicas="No tiene practicas esta clase.";
     }
     return practicas;
   }

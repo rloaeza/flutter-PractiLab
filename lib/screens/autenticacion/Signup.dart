@@ -27,8 +27,9 @@ class _SignupState extends State<Signup> implements Message
   final _keyform = GlobalKey<FormState>();
   final _keytextemail = GlobalKey<FormFieldState>();
   final _keytextpass = GlobalKey<FormFieldState>();
+
   final StringHelper _stringHelper = StringHelper();
-  String email="",password="", messages="";
+  String email="",password="",nombre="",apellidos="",telefono="",numCtrol="", messages="";
   bool loading = false;
   @override
   void initState() {
@@ -156,11 +157,11 @@ class _SignupState extends State<Signup> implements Message
                                      ),
                                      TextFormField(
                                        obscureText: true,
-                                       decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       /*validator: (String val)
+                                       decoration: Decorations().decorationtext(hintText: Strings.PASSOWORDCONFIRM,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
+                                       validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
-                                       },*/
+                                         return (val.isEmpty || password!=val )?"Error no coinciden las contraseñas":null;
+                                       },
                                      ),
                                    ]
                                )
@@ -177,12 +178,17 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
-                                       obscureText: true,
+                                       textCapitalization: TextCapitalization.words,
                                        decoration: Decorations().decorationtext(hintText: Strings.NAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       /*validator: (String val)
+                                       validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
-                                       },*/
+                                         return val.isEmpty?"Este campo no puede estar vacío":null;
+                                       },
+                                       onChanged: (val)
+                                       {
+                                         nombre=val;
+                                       },
+
                                      ),
                                    ]
                                )
@@ -199,12 +205,15 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
-                                       obscureText: true,
+                                       textCapitalization: TextCapitalization.words,
                                        decoration: Decorations().decorationtext(hintText: Strings.LASTNAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       /*validator: (String val)
+                                       validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
-                                       },*/
+                                         return val.isEmpty?"Este campo no puede estar vacío":null;
+                                       },
+                                       onChanged: (val){
+                                         apellidos=val;
+                                       },
                                      ),
                                    ]
                                )
@@ -221,12 +230,17 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
-                                       obscureText: true,
+                                       keyboardType: TextInputType.number,
                                        decoration: Decorations().decorationtext(hintText: Strings.CTRL_NUMBER,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       /*validator: (String val)
+                                       validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
-                                       },*/
+                                         return (val.isEmpty || val.length<8)?"Este campo debe de tener 8 dígitos":null;
+                                       },
+                                       onChanged: (val)
+                                       {
+                                         numCtrol=val;
+                                       },
+                                       maxLength: 8,
                                      ),
                                    ]
                                )
@@ -243,12 +257,17 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
-                                       obscureText: true,
+                                       keyboardType: TextInputType.number,
                                        decoration: Decorations().decorationtext(hintText: Strings.PHONE,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                       /*validator: (String val)
+                                       validator: (String val)
                                        {
-                                         return val.isEmpty?"Error":null;
-                                       },*/
+                                         return (val.isEmpty ||val.length<10)?"Este campo debe de tener 10 dígitos":null;
+                                       },
+                                       onChanged: (val)
+                                       {
+                                         telefono=val;
+                                       },
+                                       maxLength: 10,
                                      ),
                                    ]
                                )
@@ -268,15 +287,28 @@ class _SignupState extends State<Signup> implements Message
                                   // _changeScreen()
                                    if(_keyform.currentState.validate())
                                    {
-                                     setState(() {
-                                     loading=true;
-                                      });
-                                     dynamic result = await _authService.registerUserEmailAndPassword(email, password);
-                                     if(result==null)
+                                     if( _stringHelper.numberString(telefono) && _stringHelper.numberString(numCtrol))
+                                     {
+                                       print("entre");
+                                       setState(() {
+                                         loading=true;
+                                       });
+                                       dynamic result = await _authService.registerUserEmailAndPassword(email, password,nombre,apellidos,telefono,numCtrol);
+                                       if(result==null)
                                        {
-                                         SnackBar s = SnackBar(content: TextViewBuilder("Error de registro",colorfont: ColorsApp.white,textSize: 12),);
-                                         Scaffold.of(_keyform.currentContext).showSnackBar(s);
+
+                                         setState(() {
+                                           loading=false;
+                                         });
                                        }
+                                     }
+                                     else
+                                     {
+                                       setState(() {
+                                         messages="Campo número de control o teléfono contienen letras";
+                                       });
+
+                                     }
                                    }
                                  } ,
                                  elevation: 10.0,

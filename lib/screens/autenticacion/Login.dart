@@ -1,4 +1,6 @@
 
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
@@ -106,6 +108,7 @@ class _StateLogin  extends State<Login> implements Message
                                                   ),
                                                   TextFormField(
                                                     key: _keytextemail,
+
                                                     keyboardType: TextInputType.emailAddress,
                                                     decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                                     validator: (String emails)
@@ -134,6 +137,7 @@ class _StateLogin  extends State<Login> implements Message
                                                     ),
                                                     TextFormField(
                                                       key: _keytextpass,
+
                                                       obscureText: true,
                                                       decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                                       validator: (String val)
@@ -176,15 +180,16 @@ class _StateLogin  extends State<Login> implements Message
                                            if( _keyform.currentState.validate())
                                              {
                                                print("ok ${email} & $password");
+
                                                setState(() {
                                                  loading=true;
                                                });
                                                dynamic result = _authService.signInUserEmailAndPassword(email, password);
-                                               if(result == null)
+                                               if(result != null)
                                                {
-                                                 print("sot nullo");
-
+                                                 print("no soy null");
                                                }
+
                                              }
                                            else{
                                              Toast.show("Error en las credenciales, campos inválidos",context);
@@ -240,7 +245,6 @@ class _StateLogin  extends State<Login> implements Message
 
 
   }
-
   void setSnackBar(String message)
   {
     if(message!="")
@@ -250,7 +254,6 @@ class _StateLogin  extends State<Login> implements Message
         messages="";
       });
     }
-
   }
 
 }

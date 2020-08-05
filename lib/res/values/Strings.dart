@@ -2,6 +2,7 @@ class Strings {
   static final String NAME_APP = 'PráctiLab';
   static final String EMAIL = 'Email';
   static final String PASSOWORD = 'Contraseña';
+  static final String PASSOWORDCONFIRM = 'Confirmar contraseña';
   static final String LOGIN = 'Iniciar Sesión';
   static final String SIGNUP = 'Registrarse';
   static final String NAME = 'Nombre';
@@ -21,5 +22,8 @@ class Strings {
   static final String PREGUNTAS = 'Preguntas';
   static final String INGRESANDO ="Ingresando al sistema";
   static final String SALIENDO ="Saliendo al sistema";
+  static final String AGREGADAMATERIA ="Materia agregada";
+  static final String ELIMINADAMATERIA ="Materia eliminada";
+  static final String SINMATERIA ="No tienes materias agregada";
 
 }

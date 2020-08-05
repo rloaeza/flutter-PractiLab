@@ -42,5 +42,21 @@ class StringHelper
     return password.isNotEmpty;
   }
 
+  // funcion que evalua que todos los caracteres sean numeros
+  bool numberString(String texto)
+  {
+    bool status=true;
+    for(int i=0;i<texto.length;i++)
+    {
+      if(texto[0]!="0" && texto[0]!="1" && texto[0]!="2" && texto[0]!="3" && texto[0]!="4" && texto[0]!="5" && texto[0]!="6" && texto[0]!="7" && texto[0]!="8" && texto[0]!="9")
+      {
+        status=false;
+        i=texto.length;
+      }
+
+    }
+    return status;
+  }
+
 
 }

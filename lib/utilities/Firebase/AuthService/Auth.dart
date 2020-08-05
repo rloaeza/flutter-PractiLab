@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-
+import 'package:practilab/utilities/Firebase/DataService/Database.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
 import 'package:practilab/utilities/models/User.dart';
 
@@ -48,17 +48,25 @@ class AuthService
     return null;
   }
   //register with email & password
-  Future registerUserEmailAndPassword(String email, String password) async
+  Future registerUserEmailAndPassword(String email, String password,String nombre,String apellidos,String telefono,String numeroCtrol) async
   {
     try {
       AuthResult authResult = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-
+      FirebaseUser user= authResult.user;
+      await DatabaseUser(uid: user.uid).createUserData(nombre, apellidos, email, password, telefono, numeroCtrol);
       return _userFromFirebaseUser(authResult.user);
     } on PlatformException catch (exception) {
+      print(exception.code);
       switch (exception.code) {
         case 'ERROR_EMAIL_ALREADY_IN_USE':
          message.onMessage("El email ya existe");
+          break;
+        case 'ERROR_WEAK_PASSWORD':
+          message.onMessage("La contraseña debe de tener al menos 6 caracteres");
+          break;
+        case 'ERROR_INVALID_EMAIL':
+          message.onMessage("El email inválido usa otro");
           break;
         default:
           break;
