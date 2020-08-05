@@ -7,6 +7,7 @@ import 'package:practilab/res/values/Strings.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
 import 'package:practilab/utilities/Firebase/DataService/Database.dart';
+import 'package:practilab/utilities/componentes/ShappingSheet.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/componentes/lists/ListViewBuilderMaterias.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
@@ -64,10 +65,32 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
                          padding: EdgeInsets.only(left: 10, right: MediaQuery
                              .of(context)
                              .size
-                             .width / 4 + 50),
+                             .width / 4 ),
                          child: TextViewBuilder(
                              Strings.TUS_CLASES, colorfont: ColorsApp.white,
                              textSize: 30.0),),
+                       IconButton(
+                         icon: Icon(
+                           Icons.settings, color: ColorsApp.blue,
+                           size: 30.0,),
+                         onPressed: () async
+                         {
+                           showModalBottomSheet(
+                               shape: RoundedRectangleBorder(
+                                   borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
+                               isScrollControlled: true,
+                               context: context,
+                               builder: (context)
+                               {
+                                 return Container(
+                                   height: MediaQuery.of(context).size.height * 0.80,
+                                   padding: EdgeInsets.symmetric(vertical: 30.0,horizontal: 30.0),
+                                   child: ButtonSheet(),
+                                 );
+                               });
+                           print("hola");
+                         },
+                       ),
                        IconButton(
                          icon: Icon(
                            Icons.exit_to_app, color: ColorsApp.blue,

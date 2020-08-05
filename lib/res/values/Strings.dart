@@ -25,5 +25,5 @@ class Strings {
   static final String AGREGADAMATERIA ="Materia agregada";
   static final String ELIMINADAMATERIA ="Materia eliminada";
   static final String SINMATERIA ="No tienes materias agregada";
-
+  static final String ACTUALIZADATOS ="Actualiza tus datos";
 }

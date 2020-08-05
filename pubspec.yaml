@@ -33,7 +33,10 @@ dependencies:
   back_button_interceptor: ^4.2.4  #backpress in android
   provider: ^4.3.1   #provider streams
   toast: ^0.1.5      #toast
+  snapping_sheet: ^2.0.1   #shapping_sheet
+
   shared_preferences: ^0.5.8  #sharedpreferences
+
 
 dev_dependencies:
   flutter_test:
