@@ -9,15 +9,15 @@ import '../TextViewBuilder.dart';
 
 class MateriaTile extends StatefulWidget
 {
-  NotificarEliminacionMateria notificarEliminacionMateria;
+  NotificarObject notificarObject;
   final Materia materia;
   MateriaTile({this.materia});
   @override
   _MateriaTileState createState() => new _MateriaTileState();
 
-  void setNotificarEliminacionLitener(NotificarEliminacionMateria notificarEliminacionMateria)
+  void setNotificarObjectListener(NotificarObject notificarObject)
   {
-    this.notificarEliminacionMateria=notificarEliminacionMateria;
+    this.notificarObject=notificarObject;
   }
  }
 class _MateriaTileState extends State<MateriaTile>
@@ -49,7 +49,7 @@ class _MateriaTileState extends State<MateriaTile>
             onLongPress: (){
               SnackBar s = SnackBar(content: TextViewBuilder(this.widget.materia.uid+"",colorfont: ColorsApp.white,textSize: 12),);
               Scaffold.of(context).showSnackBar(s);
-              this.widget.notificarEliminacionMateria.setMateriaId(this.widget.materia.uid);
+              this.widget.notificarObject.setObject(this.widget.materia.uid);
             },
           ),
           Divider(color: ColorsApp.blue,)

@@ -12,7 +12,6 @@ import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/componentes/lists/ListViewBuilderMaterias.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
 import 'package:practilab/utilities/interfaces/NotificarEliminacion.dart';
-import 'package:practilab/utilities/models/Materia.dart';
 import 'package:practilab/utilities/models/User.dart';
 import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
@@ -21,7 +20,8 @@ class Principal extends StatefulWidget {
   @override
   _PrincipalState createState() => new _PrincipalState();
  }
-class _PrincipalState extends State<Principal> implements Message,NotificarEliminacionMateria {
+class _PrincipalState extends State<Principal> implements Message,NotificarObject
+{
 
    final  AuthService _authService =  AuthService();
    DatabaseUser _databaseUser;
@@ -40,7 +40,7 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
    _databaseUser = DatabaseUser(uid: user.uid,message: this);
    final _keyaddmateria = GlobalKey<FormFieldState>();
    return  StreamBuilder<Alumno>(
-     stream:_databaseUser.alumno ,
+     stream:_databaseUser.alumno,
      builder: (context,snapshot)
      {
        if(snapshot.hasData)
@@ -76,6 +76,7 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
                          onPressed: () async
                          {
                            showModalBottomSheet(
+
                                shape: RoundedRectangleBorder(
                                    borderRadius: BorderRadius.vertical(top: Radius.circular(25.0))),
                                isScrollControlled: true,
@@ -83,12 +84,11 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
                                builder: (context)
                                {
                                  return Container(
-                                   height: MediaQuery.of(context).size.height * 0.80,
+                                   //height: MediaQuery.of(context).size.height * 0.80,
                                    padding: EdgeInsets.symmetric(vertical: 30.0,horizontal: 30.0),
-                                   child: ButtonSheet(),
+                                   child: BottonSheet(alumno: alumno,notificarObject: this),
                                  );
                                });
-                           print("hola");
                          },
                        ),
                        IconButton(
@@ -116,7 +116,7 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
                      ),
                      child: Container(
                        padding: EdgeInsets.all(5),
-                       child: ListViewBuilderMaterias(materias: alumno.materias,notificarEliminacionMateria: this,),
+                       child: ListViewBuilderMaterias(materias: alumno.materias,notificarObject: this,),
                      ),
                    ),
                  ),
@@ -258,8 +258,21 @@ class _PrincipalState extends State<Principal> implements Message,NotificarElimi
   }
 
   @override
-  void setMateriaId(String idmateria)
+  void setObject(dynamic data)
   {
-    _databaseUser.deleteteMateria(idmateria, alumno.materias);
+    if(data is String)
+    {
+      String idmateria = data as String;
+      _databaseUser.deleteMateria(idmateria, alumno.materias);
+    }
+    else if(data is Alumno)
+    {
+      Alumno alumno = data;
+      _databaseUser.updateUserData(alumno.nombre, alumno.apellido, alumno.telefono, alumno.numeroCtrol);
+      setState(() {
+        messages=Strings.ACTUALIZADOS;
+      });
+    }
+
   }
 }

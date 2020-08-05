@@ -15,9 +15,9 @@ import 'package:provider/provider.dart';
 
 class ListViewBuilderMaterias extends StatefulWidget
 {
-  NotificarEliminacionMateria notificarEliminacionMateria;
+  NotificarObject notificarObject;
   List<dynamic> materias;
-  ListViewBuilderMaterias({this.materias,this.notificarEliminacionMateria});
+  ListViewBuilderMaterias({this.materias,this.notificarObject});
   @override
   _ListViewBuilderMateriasState createState() => new _ListViewBuilderMateriasState();
 
@@ -54,7 +54,7 @@ class _ListViewBuilderMateriasState extends State<ListViewBuilderMaterias>
             itemCount:materias.length, // materias.length,
             itemBuilder: (context, index) {
               MateriaTile materiaTile = MateriaTile(materia: materias[index],);
-              materiaTile.setNotificarEliminacionLitener(this.widget.notificarEliminacionMateria);
+              materiaTile.setNotificarObjectListener(this.widget.notificarObject);
               return materiaTile;
             },
           );

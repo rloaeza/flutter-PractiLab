@@ -23,7 +23,7 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> implements Message
 {
   final AuthService _authService = AuthService();
-  final _keyscaffold = GlobalKey<ScaffoldState>();
+
   final _keyform = GlobalKey<FormState>();
   final _keytextemail = GlobalKey<FormFieldState>();
   final _keytextpass = GlobalKey<FormFieldState>();
@@ -40,7 +40,6 @@ class _SignupState extends State<Signup> implements Message
   @override
   Widget build(BuildContext context) {
    return loading?ProgressIndicatorBuilder(title: Strings.INGRESANDO):Scaffold(
-     key: _keyscaffold,
      backgroundColor: Colors.transparent,
      body: SingleChildScrollView(
            child: Container(
@@ -99,6 +98,7 @@ class _SignupState extends State<Signup> implements Message
                                    ),
                                    TextFormField(
                                      key: _keytextemail,
+                                     enableInteractiveSelection: false,
                                      keyboardType: TextInputType.emailAddress,
                                      decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                      validator: (String emails)
@@ -127,6 +127,7 @@ class _SignupState extends State<Signup> implements Message
                                      ),
                                      TextFormField(
                                        key: _keytextpass,
+                                       enableInteractiveSelection: false,
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
@@ -156,6 +157,7 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
+                                       enableInteractiveSelection: false,
                                        obscureText: true,
                                        decoration: Decorations().decorationtext(hintText: Strings.PASSOWORDCONFIRM,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
@@ -178,6 +180,7 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
+                                       enableInteractiveSelection: false,
                                        textCapitalization: TextCapitalization.words,
                                        decoration: Decorations().decorationtext(hintText: Strings.NAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
@@ -205,6 +208,7 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
+                                       enableInteractiveSelection: false,
                                        textCapitalization: TextCapitalization.words,
                                        decoration: Decorations().decorationtext(hintText: Strings.LASTNAME,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
@@ -230,6 +234,7 @@ class _SignupState extends State<Signup> implements Message
                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                      ),
                                      TextFormField(
+                                       enableInteractiveSelection: false,
                                        keyboardType: TextInputType.number,
                                        decoration: Decorations().decorationtext(hintText: Strings.CTRL_NUMBER,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
@@ -258,6 +263,7 @@ class _SignupState extends State<Signup> implements Message
                                      ),
                                      TextFormField(
                                        keyboardType: TextInputType.number,
+                                       enableInteractiveSelection: false,
                                        decoration: Decorations().decorationtext(hintText: Strings.PHONE,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                        validator: (String val)
                                        {

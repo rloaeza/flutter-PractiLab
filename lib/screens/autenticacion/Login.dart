@@ -108,7 +108,7 @@ class _StateLogin  extends State<Login> implements Message
                                                   ),
                                                   TextFormField(
                                                     key: _keytextemail,
-
+                                                    enableInteractiveSelection: false,
                                                     keyboardType: TextInputType.emailAddress,
                                                     decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                                     validator: (String emails)
@@ -137,7 +137,7 @@ class _StateLogin  extends State<Login> implements Message
                                                     ),
                                                     TextFormField(
                                                       key: _keytextpass,
-
+                                                      enableInteractiveSelection: false,
                                                       obscureText: true,
                                                       decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
                                                       validator: (String val)

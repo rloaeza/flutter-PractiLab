@@ -1,4 +1,4 @@
-abstract class NotificarEliminacionMateria
+abstract class NotificarObject
 {
-  void setMateriaId(String idmateria);
+  void setObject(dynamic data);
 }

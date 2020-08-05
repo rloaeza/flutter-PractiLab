@@ -15,7 +15,7 @@ class DatabaseUser
 
   final CollectionReference alumnoCollection = Firestore.instance.collection("alumnos");
 
-  //Create y actualizar Alumno
+  //Create Alumno
   Future createUserData(String nombre,String apellidos,String email,String password,String telefono,String numeroCtrol) async
   {
     List<String> lista =[];
@@ -29,6 +29,22 @@ class DatabaseUser
       "misclases":lista
     });
   }
+  //actualizar materia
+  Future updateUserData(String nombre,String apellidos,String telefono,String numeroCtrol) async
+  {
+
+    Future update = alumnoCollection.document(uid).updateData({
+      "nombre":nombre,
+      "apellidos":apellidos,
+      "telefono":telefono,
+      "numeroCtrol":numeroCtrol,
+    });
+    message.onMessage(Strings.ACTUALIZADOS);
+    return update;
+
+
+  }
+  //actualizar lista de materias
   Future updateMateria(String materia,List<String>materias)
   {
     DocumentReference documentReference = alumnoCollection.document(uid);
@@ -36,7 +52,8 @@ class DatabaseUser
     documentReference.updateData({"misclases":materias});
     message.onMessage(Strings.AGREGADAMATERIA);
   }
-  Future deleteteMateria(String materia,List<String>materias)
+  //eliminar materia
+  Future deleteMateria(String materia,List<String>materias)
   {
     DocumentReference documentReference = alumnoCollection.document(uid);
     materias.remove(materia);
