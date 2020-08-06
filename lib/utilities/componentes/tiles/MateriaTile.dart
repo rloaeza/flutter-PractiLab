@@ -27,7 +27,7 @@ class _MateriaTileState extends State<MateriaTile>
   Widget build(BuildContext context)
   {
 
-    return FadeAnimation(1.8,
+    return FadeAnimation(2,
        Column(
           children: <Widget>[
             ListTile(

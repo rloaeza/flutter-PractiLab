@@ -98,10 +98,10 @@ class _StateLogin  extends State<Login> implements Message
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                          FadeAnimation(1.3,SizedBox(
+                                          SizedBox(
                                                 height: 70,
                                                 width: MediaQuery.of(context).size.width/2+100,
-                                                child: Stack(
+                                                child: FadeAnimation(1.5,Stack(
                                                   children: <Widget>[
                                                     Material(
                                                       elevation: 5,
@@ -128,10 +128,10 @@ class _StateLogin  extends State<Login> implements Message
                                             ),
                                           ),
                                           SizedBox(height: 5,),
-                                          FadeAnimation(1.6,SizedBox(
+                                          SizedBox(
                                                 height: 70,
                                                 width: MediaQuery.of(context).size.width/2+100,
-                                                child: Stack(
+                                                child: FadeAnimation(2.0,Stack(
                                                     children:<Widget>[
                                                       Material(
                                                           elevation: 5,
@@ -173,10 +173,10 @@ class _StateLogin  extends State<Login> implements Message
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      FadeAnimation(1.9, SizedBox(
+                                      SizedBox(
                                           width: MediaQuery.of(context).size.width/2+100,
                                           height: 40,
-                                          child: RaisedButton(
+                                          child:  FadeAnimation(2.5, RaisedButton(
                                             child: Center(child: TextViewBuilder(Strings.LOGIN,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400)),
                                            onPressed: () async
                                             {
@@ -205,10 +205,10 @@ class _StateLogin  extends State<Login> implements Message
                                           ),
                                         ),
                                       ),
-                                      FadeAnimation(2.1, SizedBox(
+                                       SizedBox(
                                           width: MediaQuery.of(context).size.width/2+100,
                                           height: 40,
-                                          child: RaisedButton(
+                                          child: FadeAnimation(3,RaisedButton(
                                               child: TextViewBuilder(Strings.SIGNUP,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400),
                                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
                                               onPressed:()=>

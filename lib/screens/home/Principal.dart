@@ -220,7 +220,9 @@ class _PrincipalState extends State<Principal> implements Message,NotificarObjec
        else
        {
           return FadeAnimation(1,
-            Column(
+              Center(
+              child: CircularProgressIndicator())
+            /*Column(
              crossAxisAlignment: CrossAxisAlignment.stretch,
              children: <Widget>[
                SizedBox(height: 30.0,),
@@ -257,7 +259,7 @@ class _PrincipalState extends State<Principal> implements Message,NotificarObjec
                  ),
                )
              ],
-         ),
+         )*/,
           );
        }
      }
