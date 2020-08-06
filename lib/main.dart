@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           FadeInImage.memoryNetwork(
-            fadeInDuration:  Duration(milliseconds: 1000),
+            fadeInDuration:  Duration(milliseconds: 500),
             placeholder: kTransparentImage,//DrawableValues.BACKGROUND_IMAGE,
             image: "https://firebasestorage.googleapis.com/v0/b/practilab-itsu.appspot.com/o/background.png?alt=media&token=20ac8e79-6e87-459f-982f-0eb902e5d83d",
           ),
