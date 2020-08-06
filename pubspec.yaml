@@ -34,7 +34,9 @@ dependencies:
   provider: ^4.3.1   #provider streams
   toast: ^0.1.5      #toast
   snapping_sheet: ^2.0.1   #shapping_sheet
+  transparent_image: ^1.0.0   #transparent image
 
+  sa_v1_migration: ^1.1.2 #animacion
   shared_preferences: ^0.5.8  #sharedpreferences
 
 

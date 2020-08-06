@@ -3,6 +3,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:practilab/res/values/Animation.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
 import 'package:practilab/utilities/componentes/ProgressIndicatorBuilder.dart';
@@ -76,12 +77,13 @@ class _StateLogin  extends State<Login> implements Message
                           children: <Widget>[
                             Expanded(
                               flex: 1,
-                              child: Container(
-                                padding: EdgeInsets.only(top: 60,left: 33),
-                                decoration: BoxDecoration(
-                                    color: Colors.transparent
+                              child: FadeAnimation(1,Container(
+                                  padding: EdgeInsets.only(top: 60,left: 33),
+                                  decoration: BoxDecoration(
+                                      color: Colors.transparent
+                                  ),
+                                  child: TextViewBuilder(Strings.NAME_APP ,colorfont: ColorsApp.white,textSize: 30.0,fontWeight: FontWeight.w500),
                                 ),
-                                child: TextViewBuilder(Strings.NAME_APP ,colorfont: ColorsApp.white,textSize: 30.0,fontWeight: FontWeight.w500),
                               )
                             ),
                             Expanded(
@@ -96,64 +98,66 @@ class _StateLogin  extends State<Login> implements Message
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: <Widget>[
-                                          SizedBox(
-                                              height: 70,
-                                              width: MediaQuery.of(context).size.width/2+100,
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  Material(
-                                                    elevation: 5,
-                                                    borderRadius: BorderRadius.circular(30),
-                                                    child:Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
-                                                  ),
-                                                  TextFormField(
-                                                    key: _keytextemail,
-                                                    enableInteractiveSelection: false,
-                                                    keyboardType: TextInputType.emailAddress,
-                                                    decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                                    validator: (String emails)
-                                                    {
-                                                      return !_stringHelper.isEmail(email)?"No es un email válido. ejem@serv.com!":null;
-                                                    },
-                                                    onChanged: (String val)
-                                                    {
-                                                      email=val;
-                                                      _keytextemail.currentState.validate();
-                                                    },
-                                                  ),
-                                                ],
-                                              )
-                                          ),
-                                          SizedBox(height: 5,),
-                                          SizedBox(
-                                              height: 70,
-                                              width: MediaQuery.of(context).size.width/2+100,
-                                              child: Stack(
-                                                  children:<Widget>[
+                                          FadeAnimation(1.3,SizedBox(
+                                                height: 70,
+                                                width: MediaQuery.of(context).size.width/2+100,
+                                                child: Stack(
+                                                  children: <Widget>[
                                                     Material(
-                                                        elevation: 5,
-                                                        borderRadius: BorderRadius.circular(30),
-                                                        child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
+                                                      elevation: 5,
+                                                      borderRadius: BorderRadius.circular(30),
+                                                      child:Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
                                                     ),
                                                     TextFormField(
-                                                      key: _keytextpass,
+                                                      key: _keytextemail,
                                                       enableInteractiveSelection: false,
-                                                      obscureText: true,
-                                                      decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
-                                                      validator: (String val)
+                                                      keyboardType: TextInputType.emailAddress,
+                                                      decoration: Decorations().decorationtext(hintText: Strings.EMAIL,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
+                                                      validator: (String emails)
                                                       {
-                                                        val=password;
-                                                        //print(val);
-                                                        return val.isEmpty?"Error, campo vacío":null;
+                                                        return !_stringHelper.isEmail(email)?"No es un email válido. ejem@serv.com!":null;
                                                       },
-                                                      onChanged: (String pass)
+                                                      onChanged: (String val)
                                                       {
-                                                        password=pass;
-                                                        _keytextpass.currentState.validate();
+                                                        email=val;
+                                                        _keytextemail.currentState.validate();
                                                       },
                                                     ),
-                                                  ]
-                                              )
+                                                  ],
+                                                )
+                                            ),
+                                          ),
+                                          SizedBox(height: 5,),
+                                          FadeAnimation(1.6,SizedBox(
+                                                height: 70,
+                                                width: MediaQuery.of(context).size.width/2+100,
+                                                child: Stack(
+                                                    children:<Widget>[
+                                                      Material(
+                                                          elevation: 5,
+                                                          borderRadius: BorderRadius.circular(30),
+                                                          child: Padding(padding: EdgeInsets.symmetric(vertical: 23,horizontal: 300),)
+                                                      ),
+                                                      TextFormField(
+                                                        key: _keytextpass,
+                                                        enableInteractiveSelection: false,
+                                                        obscureText: true,
+                                                        decoration: Decorations().decorationtext(hintText: Strings.PASSOWORD,colorBorder: ColorsApp.white,colorBorderFocused: ColorsApp.white),
+                                                        validator: (String val)
+                                                        {
+                                                          val=password;
+                                                          //print(val);
+                                                          return val.isEmpty?"Error, campo vacío":null;
+                                                        },
+                                                        onChanged: (String pass)
+                                                        {
+                                                          password=pass;
+                                                          _keytextpass.currentState.validate();
+                                                        },
+                                                      ),
+                                                    ]
+                                                )
+                                            ),
                                           )
                                         ],
                                       ),
@@ -169,51 +173,53 @@ class _StateLogin  extends State<Login> implements Message
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width/2+100,
-                                        height: 40,
-                                        child: RaisedButton(
-                                          child: Center(child: TextViewBuilder(Strings.LOGIN,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400)),
-                                         onPressed: () async
-                                          {
-                                            //_onLoading();
-                                           if( _keyform.currentState.validate())
-                                             {
-                                               print("ok ${email} & $password");
-
-                                               setState(() {
-                                                 loading=true;
-                                               });
-                                               dynamic result = _authService.signInUserEmailAndPassword(email, password);
-                                               if(result != null)
-                                               {
-                                                 print("no soy null");
-                                               }
-
-                                             }
-                                           else{
-                                             Toast.show("Error en las credenciales, campos inválidos",context);
-                                           }
-                                          },
-                                          color: ColorsApp.blue,
-                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                                          elevation: 10,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: MediaQuery.of(context).size.width/2+100,
-                                        height: 40,
-                                        child: RaisedButton(
-                                            child: TextViewBuilder(Strings.SIGNUP,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400),
-                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-                                            onPressed:()=>
+                                      FadeAnimation(1.9, SizedBox(
+                                          width: MediaQuery.of(context).size.width/2+100,
+                                          height: 40,
+                                          child: RaisedButton(
+                                            child: Center(child: TextViewBuilder(Strings.LOGIN,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400)),
+                                           onPressed: () async
                                             {
-                                             _changeScreen()
-                                            } ,
-                                            elevation: 10.0,
+                                              //_onLoading();
+                                             if( _keyform.currentState.validate())
+                                               {
+                                                 print("ok ${email} & $password");
+
+                                                 setState(() {
+                                                   loading=true;
+                                                 });
+                                                 dynamic result = _authService.signInUserEmailAndPassword(email, password);
+                                                 if(result != null)
+                                                 {
+                                                   print("no soy null");
+                                                 }
+
+                                               }
+                                             else{
+                                               Toast.show("Error en las credenciales, campos inválidos",context);
+                                             }
+                                            },
                                             color: ColorsApp.blue,
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                                            elevation: 10,
                                           ),
                                         ),
+                                      ),
+                                      FadeAnimation(2.1, SizedBox(
+                                          width: MediaQuery.of(context).size.width/2+100,
+                                          height: 40,
+                                          child: RaisedButton(
+                                              child: TextViewBuilder(Strings.SIGNUP,colorfont: ColorsApp.white,textSize: 20.0,fontWeight: FontWeight.w400),
+                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                                              onPressed:()=>
+                                              {
+                                               _changeScreen()
+                                              } ,
+                                              elevation: 10.0,
+                                              color: ColorsApp.blue,
+                                            ),
+                                          ),
+                                      ),
                                     ],
                                   ),
                                 )

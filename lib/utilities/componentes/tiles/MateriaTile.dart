@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practilab/res/values/Animation.dart';
 import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/utilities/interfaces/NotificarEliminacion.dart';
 import 'package:practilab/utilities/models/Materia.dart';
@@ -26,34 +27,36 @@ class _MateriaTileState extends State<MateriaTile>
   Widget build(BuildContext context)
   {
 
-    return Column(
-        children: <Widget>[
-          ListTile(
-            trailing: IconButton(
-                icon:Icon(Icons.message,
-                  color: ColorsApp.blue,
-                  size: 35,),
-                onPressed: ()
-                {
-                  SnackBar s = SnackBar(content: TextViewBuilder("mensaje",colorfont: ColorsApp.white,textSize: 12),);
-                  Scaffold.of(context).showSnackBar(s);
-                }),
-            title: TextViewBuilder(this.widget.materia.nombre,colorfont: ColorsApp.blue,textSize: 20.0),
-            subtitle: TextViewBuilderElipsis(praticas(this.widget.materia.cantidadPracticas),colorfont: ColorsApp.blue,textSize: 12.0),
-            onTap: ()
-            {
+    return FadeAnimation(1.8,
+       Column(
+          children: <Widget>[
+            ListTile(
+              trailing: IconButton(
+                  icon:Icon(Icons.message,
+                    color: ColorsApp.blue,
+                    size: 35,),
+                  onPressed: ()
+                  {
+                    SnackBar s = SnackBar(content: TextViewBuilder("mensaje",colorfont: ColorsApp.white,textSize: 12),);
+                    Scaffold.of(context).showSnackBar(s);
+                  }),
+              title: TextViewBuilder(this.widget.materia.nombre,colorfont: ColorsApp.blue,textSize: 20.0),
+              subtitle: TextViewBuilderElipsis(praticas(this.widget.materia.cantidadPracticas),colorfont: ColorsApp.blue,textSize: 12.0),
+              onTap: ()
+              {
 
-              SnackBar s = SnackBar(content: TextViewBuilder("Hola",colorfont: ColorsApp.white,textSize: 12),);
-              Scaffold.of(context).showSnackBar(s);
-            },
-            onLongPress: (){
-              SnackBar s = SnackBar(content: TextViewBuilder(this.widget.materia.uid+"",colorfont: ColorsApp.white,textSize: 12),);
-              Scaffold.of(context).showSnackBar(s);
-              this.widget.notificarObject.setObject(this.widget.materia.uid);
-            },
-          ),
-          Divider(color: ColorsApp.blue,)
-        ]
+                SnackBar s = SnackBar(content: TextViewBuilder("Hola",colorfont: ColorsApp.white,textSize: 12),);
+                Scaffold.of(context).showSnackBar(s);
+              },
+              onLongPress: (){
+                SnackBar s = SnackBar(content: TextViewBuilder(this.widget.materia.uid+"",colorfont: ColorsApp.white,textSize: 12),);
+                Scaffold.of(context).showSnackBar(s);
+                this.widget.notificarObject.setObject(this.widget.materia.uid);
+              },
+            ),
+            Divider(color: ColorsApp.blue,)
+          ]
+      ),
     );
   }
 

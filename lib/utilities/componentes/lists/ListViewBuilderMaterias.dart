@@ -48,11 +48,12 @@ class _ListViewBuilderMateriasState extends State<ListViewBuilderMaterias>
       {
         if(snapshot.hasData)
         {
-          print("datos");
+          print("datos ${snapshot.data.length}");
           List<Materia> materias = snapshot.data;
           return ListView.builder(
             itemCount:materias.length, // materias.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (context, index)
+            {
               MateriaTile materiaTile = MateriaTile(materia: materias[index],);
               materiaTile.setNotificarObjectListener(this.widget.notificarObject);
               return materiaTile;
