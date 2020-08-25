@@ -26,19 +26,6 @@ class ListViewBuilderMaterias extends StatefulWidget
 class _ListViewBuilderMateriasState extends State<ListViewBuilderMaterias>
 {
 
-  /*List<Materia> materiaItems = [
-    Materia(nombre: "Química", cantidadPracticas: 5),
-    Materia(nombre: "Redes de computadoras", cantidadPracticas: 5),
-    Materia(nombre: "Fundamentos de BBDD", cantidadPracticas: 2),
-    Materia(nombre: "Física", cantidadPracticas: 6),
-    Materia(nombre: "Electrónica 2", cantidadPracticas: 5),
-    Materia(nombre: "Cemento 1", cantidadPracticas: 1),
-    Materia(nombre: "Taller de Administración", cantidadPracticas: 9),
-    Materia(nombre: "Química orgánica", cantidadPracticas: 7)];*/
-
-  //final materias = [];//Provider.of<<List<Materias>>(context)??[];
-
-
   @override
   Widget build(BuildContext context)
   {

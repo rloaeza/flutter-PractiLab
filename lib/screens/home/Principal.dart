@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:practilab/res/values/Animation.dart';
 import 'package:practilab/res/values/Colors.dart';
-import 'package:practilab/res/values/DrawableValues.dart';
 import 'package:practilab/res/values/Strings.dart';
 import 'package:practilab/utilities/Firebase/AuthService/Auth.dart';
 import 'package:practilab/utilities/componentes/Decorations.dart';
@@ -12,7 +9,6 @@ import 'package:practilab/utilities/Firebase/DataService/Database.dart';
 import 'package:practilab/utilities/componentes/ShappingSheet.dart';
 import 'package:practilab/utilities/componentes/TextViewBuilder.dart';
 import 'package:practilab/utilities/componentes/lists/ListViewBuilderMaterias.dart';
-import 'package:practilab/utilities/helpers/ImageHelper.dart';
 import 'package:practilab/utilities/interfaces/Message.dart';
 import 'package:practilab/utilities/interfaces/NotificarEliminacion.dart';
 import 'package:practilab/utilities/models/User.dart';
@@ -222,44 +218,6 @@ class _PrincipalState extends State<Principal> implements Message,NotificarObjec
           return FadeAnimation(1,
               Center(
               child: CircularProgressIndicator())
-            /*Column(
-             crossAxisAlignment: CrossAxisAlignment.stretch,
-             children: <Widget>[
-               SizedBox(height: 30.0,),
-               Expanded(
-                 flex: 1,
-                 child: Container(
-                   width: MediaQuery
-                       .of(context)
-                       .size
-                       .width,
-                   child: Row(
-                     children: <Widget>[
-                     ],
-                   ),
-                 ),
-               ),
-               Expanded(
-                 flex: 8,
-                 child: Container(
-                   margin: EdgeInsets.only(
-                       top: 10, left: 5, right: 5, bottom: 30),
-                   child: Card(
-                     elevation: 5,
-                     shape: RoundedRectangleBorder(
-                       borderRadius: BorderRadius.circular(15.0),
-                     ),
-                     child: Container(
-                       padding: EdgeInsets.all(5),
-                       child:  Center(
-                         child: CircularProgressIndicator()
-                       )
-                     ),
-                   ),
-                 ),
-               )
-             ],
-         )*/,
           );
        }
      }
