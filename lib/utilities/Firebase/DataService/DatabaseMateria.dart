@@ -13,8 +13,8 @@ class DatabaseMateria
   {
     if(snapshot!=null)
     {
-      String nombre = snapshot.data["nombre"];
-      List<dynamic> practicas = snapshot.data["practicas"];
+      String nombre = snapshot.data()["nombre"];
+      List<dynamic> practicas = snapshot.data()["practicas"];
       return Materia(
           nombre: nombre,
           cantidadPracticas: practicas.length,
@@ -38,13 +38,13 @@ class DatabaseMateria
     int i=0;
     do
     {
-       if(documents[i].documentID==mismaterias[j].toString())
+       if(documents[i].id==mismaterias[j].toString())
        {
-         print(documents[i].documentID);
-         List<dynamic> practicas = documents[i].data["practicas"];
+         print(documents[i].id);
+         List<dynamic> practicas = documents[i].data()["practicas"];
          materias.add(  Materia(
-             uid:  documents[i].documentID,
-             nombre: documents[i].data["nombre"],
+             uid:  documents[i].id,
+             nombre: documents[i].data()["nombre"],
              practicas: practicas.cast<String>(),
              cantidadPracticas: practicas.length
          ));
