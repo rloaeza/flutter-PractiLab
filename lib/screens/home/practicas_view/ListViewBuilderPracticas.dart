@@ -35,7 +35,7 @@ class _ListViewBuilderPracticasState extends State<ListViewBuilderPracticas> {
                 itemCount: practicas.length, // materias.length,
                 itemBuilder: (context, index) {
                   PracticaTile practicaTile = PracticaTile(
-                      practica: practicas[index].nombre,);
+                      practica: practicas[index],);
                   return practicaTile;
                 },
               );

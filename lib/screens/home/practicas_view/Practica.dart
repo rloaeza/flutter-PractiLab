@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:practilab/bloc/auth_bloc/auth_bloc.dart';
 import 'package:practilab/res/values/Animation.dart';
 import 'package:practilab/res/values/Colors.dart';
 import 'package:practilab/res/values/Strings.dart';
